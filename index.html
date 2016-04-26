@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- Registrering -->
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Klubben | Registrer deg</title>
+    <meta name="description" content="My Parse App">
+    <meta name="viewport" content="width=device-width">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="regstyle.css" />
+</head>
+
+<body>
+
+    <div class="innlogging">
+         <h1>Har allerede en bruker? Logg inn her!</h1>
+        <form name="login" action="#">Mailadresse:
+            <input type="text" name="username" />Passord:
+            <input type="password" name="password" />
+            <button name="submit" type="button" onclick="logIn()" >Logg inn!</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        Parse.initialize("wSHRpQQxW6jgmxRQV8UXogZcOiRvO8s8VoVmlMYI", "imVCWFzFX4fVRGcqX8ioidD686IPb5ELzHd3WkJw");
+
+        function logOut() {
+            Parse.User.logOut(
+                console.log("Logger ut"));
+
+        }
+
+        function logIn() {
+            var name = document.login.elements[0].value;
+            var pass = document.login.elements[1].value;
+            
+
+            Parse.User.logIn(name, pass, {
+                    success: function() {
+                        console.log("Innlogging  suksessfull");
+                         window.location ="../pages/feed.html";
+                    },
+                    error: function() {
+                        console.log("Innlogging feilet:" + error.message);
+                    }
+                })
+            return false;
+        }
+    </script>
+    
+    
+
+    <div class="registrering">
+        <h1>Registrer deg:</h1>
+        <form name="signup" action="#">
+            <p>Fullt navn:</p>
+            <input type="text" name="username" />
+            <p>Passord </p>
+            <input type="password" name="password" />
+            <p>Mailadresse:</p>
+            <input type="text" name="mail" />
+            <button name="submit" type="button" onclick="signUp()">Registrer!</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        Parse.initialize("wSHRpQQxW6jgmxRQV8UXogZcOiRvO8s8VoVmlMYI", "imVCWFzFX4fVRGcqX8ioidD686IPb5ELzHd3WkJw");
+
+        function signUp() {
+            var name = document.signup.elements[0].value;
+            var pass = document.signup.elements[1].value;
+            var mail = document.signup.elements[2].value;
+
+            var user = new Parse.User();
+            user.set("username", name);
+            user.set("password", pass);
+            user.set("email", mail);
+
+            console.log("Signing up user...")
+
+            user.signUp(null, {
+                    success: function(user) {
+                        console.log("New user signed up successfully!")
+                        document.write("Din nye bruker er klar til bruk! Logg inn for å begynne å bruke appen.");
+                    },
+                    error: function(user, error) {
+                        console.log("Error: " + error.code + "" + error.message);
+                        document.write("Error: " + error.code + "" + error.message);
+                    }
+                });
+            return false;
+        }
+    </script>
+
+
+    <div class="footer3">Copyright &copy Klubben 2016
+    </div>
+</body>
+</html>
